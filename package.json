@@ -1,7 +1,7 @@
 {
   "name": "@theyahia/elma365-mcp",
   "version": "1.1.0",
-  "description": "MCP server for ELMA365 API — app items, tasks, processes, users, comments. 9 tools.",
+  "description": "MCP server for ELMA365 — BPM, low-code app items (Russia)",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -46,7 +46,10 @@
     "elma365",
     "bpm",
     "low-code",
-    "streamable-http"
+    "streamable-http",
+    "api",
+    "typescript",
+    "crm"
   ],
   "license": "MIT",
   "repository": {
