@@ -1,7 +1,7 @@
 {
   "name": "@theyahia/elma365-mcp",
-  "version": "1.1.1",
-  "description": "MCP server for ELMA365 — BPM, low-code app items (Russia)",
+  "version": "1.1.0",
+  "description": "MCP server for ELMA365 API — app items, tasks, processes, users, comments. 9 tools.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -17,7 +17,10 @@
     "build": "tsc",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
-    "prepublishOnly": "npm run build"
+    "start:http": "node dist/index.js --http",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
@@ -26,7 +29,8 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"
@@ -42,9 +46,7 @@
     "elma365",
     "bpm",
     "low-code",
-    "api",
-    "typescript",
-    "crm"
+    "streamable-http"
   ],
   "license": "MIT",
   "repository": {

@@ -1,0 +1,38 @@
+name: elma365-mcp
+description: MCP server for ELMA365 BPM/Low-Code platform — app items, tasks, processes, users, comments.
+version: 1.1.0
+
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      ELMA365_DOMAIN:
+        type: string
+        description: "ELMA365 domain (e.g. mycompany or mycompany.elma365.ru)"
+      ELMA365_TOKEN:
+        type: string
+        description: "ELMA365 API Bearer token"
+    required:
+      - ELMA365_DOMAIN
+      - ELMA365_TOKEN
+  commandFunction: |-
+    (config) => ({
+      command: "npx",
+      args: ["-y", "@theyahia/elma365-mcp"],
+      env: {
+        ELMA365_DOMAIN: config.ELMA365_DOMAIN,
+        ELMA365_TOKEN: config.ELMA365_TOKEN
+      }
+    })
+
+tools:
+  - get_app_items
+  - create_item
+  - get_tasks
+  - get_processes
+  - start_process
+  - get_users
+  - get_user_by_id
+  - get_comments
+  - add_comment

@@ -1,21 +1,38 @@
 const TIMEOUT = 10_000;
 const MAX_RETRIES = 3;
 
-function getBaseUrl(): string {
+export function getDomain(): string {
   const domain = process.env.ELMA365_DOMAIN;
-  if (!domain) throw new Error("ELMA365_DOMAIN не задан");
-  return `https://${domain}/pub/v1`;
+  if (!domain) throw new Error("ELMA365_DOMAIN не задан. Укажите домен (например: mycompany)");
+  return domain;
+}
+
+export function getToken(): string {
+  const token = process.env.ELMA365_TOKEN;
+  if (!token) throw new Error("ELMA365_TOKEN не задан. Укажите Bearer-токен ELMA365 API");
+  return token;
+}
+
+function getBaseUrl(): string {
+  const domain = getDomain();
+  // Support both "mycompany" and "mycompany.elma365.ru"
+  const host = domain.includes(".") ? domain : `${domain}.elma365.ru`;
+  return `https://${host}/pub/v1`;
+}
+
+export function getExtensionsUrl(): string {
+  const domain = getDomain();
+  const host = domain.includes(".") ? domain : `${domain}.elma365.ru`;
+  return `https://${host}/api/extensions`;
 }
 
 export async function elmaRequest(
-  method: "GET" | "POST",
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
   endpoint: string,
   body?: Record<string, unknown>,
   params?: Record<string, string>,
 ): Promise<unknown> {
-  const token = process.env.ELMA365_TOKEN;
-  if (!token) throw new Error("ELMA365_TOKEN не задан");
-
+  const token = getToken();
   const baseUrl = getBaseUrl();
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
@@ -37,7 +54,8 @@ export async function elmaRequest(
       clearTimeout(timer);
 
       if (response.ok) {
-        return await response.json();
+        const text = await response.text();
+        return text ? JSON.parse(text) : { success: true };
       }
 
       if ((response.status === 429 || response.status >= 500) && attempt < MAX_RETRIES) {
@@ -47,7 +65,8 @@ export async function elmaRequest(
         continue;
       }
 
-      throw new Error(`ELMA365 HTTP ${response.status}: ${response.statusText}`);
+      const errBody = await response.text().catch(() => "");
+      throw new Error(`ELMA365 HTTP ${response.status}: ${response.statusText}${errBody ? ` — ${errBody}` : ""}`);
     } catch (error) {
       clearTimeout(timer);
       if (error instanceof DOMException && error.name === "AbortError" && attempt < MAX_RETRIES) {
