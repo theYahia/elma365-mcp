@@ -1,12 +1,18 @@
 {
   "name": "@theyahia/elma365-mcp",
-  "version": "1.0.0",
-  "description": "MCP server for ELMA365 API — app items, BPM tasks. 3 tools.",
+  "version": "1.1.1",
+  "description": "MCP server for ELMA365 — BPM, low-code app items (Russia)",
   "type": "module",
   "main": "dist/index.js",
-  "bin": { "elma365-mcp": "dist/index.js" },
-  "files": ["dist"],
-  "engines": { "node": ">=18.0.0" },
+  "bin": {
+    "elma365-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/index.ts",
@@ -22,11 +28,29 @@
     "tsx": "^4.19.0",
     "typescript": "^5.7.0"
   },
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "mcpName": "io.github.theYahia/elma365-mcp",
-  "keywords": ["mcp", "mcp-server", "model-context-protocol", "claude", "ai", "russian-api", "elma365", "bpm", "low-code"],
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "russian-api",
+    "elma365",
+    "bpm",
+    "low-code",
+    "api",
+    "typescript",
+    "crm"
+  ],
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/theYahia/elma365-mcp.git" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theYahia/elma365-mcp.git"
+  },
   "homepage": "https://github.com/theYahia/elma365-mcp#readme",
   "author": "theYahia (https://github.com/theYahia)"
 }
