@@ -1,3 +1,5 @@
+> 📦 Part of **[WWmcp — Emerging Markets MCP](https://github.com/theYahia/WWmcp)** — 114 MCP servers for non-Western APIs (Brazil/MENA/Gulf/SE Asia/Africa/CIS).
+
 # @theyahia/elma365-mcp
 
 MCP-сервер для ELMA365 API — элементы приложений, BPM-задачи, процессы, пользователи, комментарии. **9 инструментов.**
@@ -102,6 +104,15 @@ Health check: `http://localhost:3000/health`
 Добавь комментарий "Согласовано" к элементу item-123 в deals/crm_deals
 ```
 
+## 🚀 Demo prompts
+
+> **Use case (RU):** "Создай в ELMA365 заявку на отпуск через приложение 'HR', стартани workflow согласования"
+
+🤖 **Pairs well with:**
+- [`@theyahia/planfix-mcp`](https://github.com/theYahia/planfix-mcp)
+- [`@theyahia/kaiten-mcp`](https://github.com/theYahia/kaiten-mcp)
+- [`@theyahia/bitrix24-mcp`](https://github.com/theYahia/bitrix24-mcp)
+
 ## Транспорт
 
 | Режим | Команда | Описание |
@@ -129,3 +140,7 @@ npm run dev    # запуск через tsx
 ## Лицензия
 
 MIT
+
+---
+
+⭐ **Star if you build with ELMA365** — helps other devs find this server.
