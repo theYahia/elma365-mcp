@@ -43,12 +43,12 @@ describe("client", () => {
         new Response(JSON.stringify(mockResponse), { status: 200 }),
       );
 
-      const result = await elmaRequest("GET", "bpm/task");
+      const result = await elmaRequest("GET", "tasks/list");
       expect(result).toEqual(mockResponse);
       expect(fetchSpy).toHaveBeenCalledOnce();
 
       const [url, opts] = fetchSpy.mock.calls[0];
-      expect(String(url)).toBe("https://testdomain.elma365.ru/pub/v1/bpm/task");
+      expect(String(url)).toBe("https://testdomain.elma365.ru/pub/v1/tasks/list");
       expect((opts as RequestInit).headers).toEqual(
         expect.objectContaining({ Authorization: "Bearer test-token-123" }),
       );
@@ -84,6 +84,17 @@ describe("client", () => {
       await elmaRequest("GET", "test");
       const [url] = fetchSpy.mock.calls[0];
       expect(String(url)).toBe("https://my.custom.domain.ru/pub/v1/test");
+    });
+
+    it("honours ELMA365_BASE_URL override (on-premise)", async () => {
+      process.env.ELMA365_BASE_URL = "https://elma365.corp.local/pub/v1";
+      const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+        new Response(JSON.stringify({}), { status: 200 }),
+      );
+
+      await elmaRequest("GET", "tasks/list");
+      const [url] = fetchSpy.mock.calls[0];
+      expect(String(url)).toBe("https://elma365.corp.local/pub/v1/tasks/list");
     });
 
     it("throws on 4xx error", async () => {

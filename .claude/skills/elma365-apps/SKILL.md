@@ -11,9 +11,10 @@ allowed-tools:
 
 ## Алгоритм
 
-1. Вызови `get_app_items` для получения элементов приложения
-2. Вызови `create_item` для создания нового элемента
-3. Вызови `get_tasks` для получения BPM-задач
+1. Не знаешь точные namespace/code/поля? Сначала discovery: `list_namespaces` → `list_apps <namespace>` → `get_app_schema <namespace> <code>`.
+2. Вызови `get_app_items` для получения элементов приложения (`get_app_item` — один по id).
+3. Вызови `create_item` / `update_app_item` / `set_app_item_status` для записи.
+4. Вызови `get_tasks` для получения BPM-задач.
 
 ## Формат ответа
 
