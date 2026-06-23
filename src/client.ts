@@ -1,5 +1,12 @@
-const TIMEOUT = 10_000;
+const DEFAULT_TIMEOUT = 10_000;
 const MAX_RETRIES = 3;
+
+/** Таймаут запроса в мс. Переопределяется через ELMA365_TIMEOUT. */
+function getTimeout(): number {
+  const raw = process.env.ELMA365_TIMEOUT;
+  const parsed = raw ? parseInt(raw, 10) : NaN;
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_TIMEOUT;
+}
 
 export function getDomain(): string {
   const domain = process.env.ELMA365_DOMAIN;
@@ -13,17 +20,22 @@ export function getToken(): string {
   return token;
 }
 
-function getBaseUrl(): string {
+/**
+ * Базовый URL ELMA365 Public API (`.../pub/v1`).
+ *
+ * Приоритет:
+ *   1. ELMA365_BASE_URL — полный базовый URL (для on-premise / нестандартных хостов).
+ *   2. ELMA365_DOMAIN — поддомен облака (`mycompany` → `mycompany.elma365.ru`)
+ *      или полный хост (`mycompany.elma365.ru`, `elma365.mycorp.com` для on-premise).
+ */
+export function getBaseUrl(): string {
+  const explicit = process.env.ELMA365_BASE_URL;
+  if (explicit) return explicit.replace(/\/+$/, "");
+
   const domain = getDomain();
-  // Support both "mycompany" and "mycompany.elma365.ru"
+  // Поддерживаем и "mycompany", и полный хост ("mycompany.elma365.ru", on-premise "elma365.corp.com").
   const host = domain.includes(".") ? domain : `${domain}.elma365.ru`;
   return `https://${host}/pub/v1`;
-}
-
-export function getExtensionsUrl(): string {
-  const domain = getDomain();
-  const host = domain.includes(".") ? domain : `${domain}.elma365.ru`;
-  return `https://${host}/api/extensions`;
 }
 
 export async function elmaRequest(
@@ -34,10 +46,11 @@ export async function elmaRequest(
 ): Promise<unknown> {
   const token = getToken();
   const baseUrl = getBaseUrl();
+  const timeout = getTimeout();
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), TIMEOUT);
+    const timer = setTimeout(() => controller.abort(), timeout);
 
     const query = params ? `?${new URLSearchParams(params).toString()}` : "";
 

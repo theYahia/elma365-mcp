@@ -1,7 +1,7 @@
 ---
 name: skill-start-process
-description: "Запусти бизнес-процесс — запуск процесса ELMA365 по коду"
-argument-hint: <код_процесса> [параметры]
+description: "Запусти бизнес-процесс — запуск процесса ELMA365 по namespace и коду"
+argument-hint: <namespace> <код_процесса> [параметры]
 allowed-tools:
   - Bash
   - Read
@@ -9,20 +9,22 @@ allowed-tools:
 
 # /skill-start-process — Запусти бизнес-процесс
 
-Запускает бизнес-процесс в ELMA365 по его коду с опциональными параметрами контекста.
+Запускает бизнес-процесс в ELMA365 по разделу (`namespace`) и коду с опциональными параметрами контекста.
 
 ## Алгоритм
 
-1. Получи код процесса от пользователя
-2. Если нужно — запроси входные параметры
-3. Вызови `start_process` с кодом и контекстом
-4. Покажи результат запуска
+1. Получи `namespace` (раздел) и `code` (код процесса) от пользователя.
+   - Не знаешь namespace/код? Вызови `list_namespaces`, затем `list_processes <namespace>`.
+2. Если нужно — запроси входные параметры (`context`).
+3. Вызови `start_process` с `namespace`, `code` и `context`.
+4. Покажи результат запуска.
 
 ## Формат ответа
 
 ```
 ## Процесс запущен
 
+- Раздел: sales
 - Код: approval_flow
 - ID экземпляра: abc-123-def
 - Статус: Запущен
@@ -32,6 +34,6 @@ allowed-tools:
 ## Примеры
 
 ```
-/skill-start-process approval_flow
-/skill-start-process onboarding {"employee": "Иванов"}
+/skill-start-process sales approval_flow
+/skill-start-process hr onboarding {"employee": "Иванов"}
 ```

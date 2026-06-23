@@ -1,7 +1,7 @@
 {
   "name": "@theyahia/elma365-mcp",
-  "version": "1.1.0",
-  "description": "MCP server for ELMA365 — BPM, low-code app items (Russia)",
+  "version": "2.0.0",
+  "description": "MCP server for ELMA365 — BPM tasks, business processes, app items, schema discovery (Russia). 20 tools.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -18,8 +18,11 @@
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
     "start:http": "node dist/index.js --http",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src tests",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
@@ -27,9 +30,14 @@
     "zod": "^3.24.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^3.0.0",
+    "eslint": "^9.0.0",
+    "globals": "^15.0.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
+    "typescript-eslint": "^8.0.0",
     "vitest": "^3.0.0"
   },
   "publishConfig": {
@@ -49,7 +57,10 @@
     "streamable-http",
     "api",
     "typescript",
-    "crm"
+    "crm",
+    "business-process",
+    "workflow",
+    "wwmcp"
   ],
   "license": "MIT",
   "repository": {
