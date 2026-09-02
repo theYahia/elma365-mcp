@@ -1,6 +1,6 @@
-# @theyahia/elma365-mcp
+# MCP-сервер для ELMA365 — BPM-задачи и приложения low-code платформы через ИИ
 
-MCP-сервер для ELMA365 API — элементы приложений, BPM-задачи, процессы, пользователи, комментарии. **9 инструментов.**
+Если вы искали, как подключить ELMA365 к нейросети, запускать бизнес-процессы и закрывать BPM-задачи не заходя в веб-интерфейс — это оно. 9 инструментов: элементы приложений, задачи, процессы, пользователи, комментарии. Спрашиваете «мои задачи на сегодня» — получаете список и закрываете их прямо в чате.
 
 [![npm](https://img.shields.io/npm/v/@theyahia/elma365-mcp)](https://www.npmjs.com/package/@theyahia/elma365-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
